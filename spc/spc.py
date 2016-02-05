@@ -7,6 +7,7 @@ file
 
 from __future__ import division
 import struct
+from types import StringType
 import numpy as np 
 import matplotlib.pyplot as plt
 
@@ -49,11 +50,17 @@ class File:
     # CONSTRUCTOR
     # ------------------------------------------------------------------------
     
-    def __init__(self, filename):
+    def __init__(self, filePathOrObject):
         # load file
-        with open(filename, "rb") as fin:
-            content = fin.read()
+        if type(filePathOrObject) == StringType:
+            with open(filePathOrObject, "rb") as fin:
+                content = fin.read()
+                print "Read raw data"
+        else:  # Here we assume a file or file-like object with a read() method
+            content = filePathOrObject.read()
             print "Read raw data"
+            
+        
             
             
         # extract first two bytes to determine file type version
